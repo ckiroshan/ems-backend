@@ -1,0 +1,15 @@
+.navbar {
+  background-color: #333;
+  text-align: center; 
+}
+
+.navbar a,
+.navbar .navbar-brand {
+  color: #dbdbdb; 
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  color: #dbdbdb;
+}
+
