@@ -11,6 +11,7 @@ function App() {
         <HeaderComponent />
         <Routes>
           <Route path="/" element={<ListEmployeeComponent />}></Route>
+          <Route path="/employees" element={<ListEmployeeComponent />}></Route>
         </Routes>
         <FooterComponent />
       </BrowserRouter>
