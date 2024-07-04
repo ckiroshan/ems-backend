@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createEmployee, getEmployee } from "../services/EmployeeService";
+import { createEmployee, getEmployee, updateEmployee } from "../services/EmployeeService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EmployeeComponent = () => {
@@ -30,17 +30,32 @@ const EmployeeComponent = () => {
     }
   }, [id]);
 
-  function saveEmployee(e) {
+  function saveOrUpdateEmployee(e) {
     e.preventDefault();
 
     if (validateForm()) {
       const employee = { firstName, lastName, email };
       // console.log(employee);
 
-      createEmployee(employee).then((response) => {
-        console.log(response.data);
-        navigator("/employees");
-      });
+      if (id) {
+        updateEmployee(id, employee)
+          .then((response) => {
+            console.log(response.data);
+            navigator("/employees");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        createEmployee(employee)
+          .then((response) => {
+            console.log(response.data);
+            navigator("/employees");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     }
   }
 
@@ -104,7 +119,7 @@ const EmployeeComponent = () => {
                 <input type="text" placeholder="Enter Email" name="email" value={email} className={`form-control ${errors.email ? "is-invalid" : ""}`} onChange={(e) => setEmail(e.target.value)} />
                 {errors.email && <div className="invalid-feedback">{errors.email}</div>}
               </div>
-              <button className="btn btn-success my-3" onClick={saveEmployee}>
+              <button className="btn btn-success my-3" onClick={saveOrUpdateEmployee}>
                 Submit
               </button>
             </form>
